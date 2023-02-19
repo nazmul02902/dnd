@@ -4,3 +4,11 @@ export enum columnType {
     BLOCKED = "blocked",
     COMPLETED = "completed",
   }
+
+
+  export type taskType = {
+    id: string;
+    title: string;
+    column: string;
+    color: string;
+  };

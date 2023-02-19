@@ -1,25 +1,23 @@
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Box, IconButton, Textarea } from "@chakra-ui/react";
+import { Box, EditableTextarea, IconButton, Textarea } from "@chakra-ui/react";
+import { taskType } from "../utils/types";
 
-type taskType = {
-  id?: string;
-  title?: string;
-  column?: string;
-  color?: string;
-};
 
-const Task = (props: taskType) => {
+
+const Task = ({id, color, column, title}: taskType) => {
   return (
-    <Box bgColor={"gray.700"} rounded="lg" pos={"relative"}>
+    <Box bgColor={color} rounded="lg" pos={"relative"} role="group" cursor={"grab"}>
       <IconButton
         pos={"absolute"}
         top={0}
         right={0}
+        opacity={0}
+        _groupHover={{opacity: 1}}
         aria-label="delete-task"
         icon={<DeleteIcon />}
         zIndex={100}
       />
-      <Textarea height={"full"} />
+      <Textarea value={title} resize="vertical" cursor={"inherit"} />
     </Box>
   );
 };

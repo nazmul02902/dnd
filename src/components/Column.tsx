@@ -7,20 +7,48 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { columnType } from "../utils/types";
+import useColumnTask from "../hooks/useColumnTask";
+import { columnType, taskType } from "../utils/types";
 import Task from "./Task";
 
+const columnColorScheme: Record<columnType, string> = {
+  todo: "gray",
+  "in progress": "blue",
+  blocked: "red",
+  completed: "green",
+};
 
+const mockTasks: taskType[] = [
+  {
+    id: "1",
+    title: "mock Title",
+    column: columnType.TO_DO,
+    color: "red.600",
+  },
+  {
+    id: "1",
+    title: "mock Title",
+    column: columnType.COMPLETED,
+    color: "green.600",
+  },
+  {
+    id: "1",
+    title: "mock Title",
+    column: columnType.TO_DO,
+    color: "blue.600",
+  },
+];
 
-const Column = (props: {column: columnType}) => {
+const Column = ({ column }: { column: columnType }) => {
+  const {tasks, addEmptyTask} = useColumnTask(column);
   return (
     <Box>
       <Heading>
-        <Badge py={1} px={2} colorScheme="red">
-          This is badge area
+        <Badge py={1} px={2} colorScheme={columnColorScheme[column]}>
+          {column}
         </Badge>
       </Heading>
-      <IconButton w={"full"} aria-label="add" icon={<AddIcon />} />
+      <IconButton w={"full"} aria-label="add" icon={<AddIcon />} onClick={addEmptyTask} />
       <Stack
         boxShadow={"md"}
         mt="2"
@@ -28,10 +56,16 @@ const Column = (props: {column: columnType}) => {
         spacing="4"
         p="4"
       >
-        <Task />
-        <Task />
-        <Task />
-        <Task />
+        {tasks.map((task, i) => {
+          return (
+            <Task
+              id={task.id}
+              title={task.title}
+              column={task.column}
+              color={task.color}
+            />
+          );
+        })}
       </Stack>
     </Box>
   );
