@@ -9,6 +9,6 @@ export enum columnType {
   export type taskType = {
     id: string;
     title: string;
-    column: string;
+    column: columnType;
     color: string;
   };

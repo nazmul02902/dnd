@@ -8,7 +8,7 @@ const useTaskCollection = () => {
       {
         id: uuidv4(),
         column: columnType.TO_DO,
-        title: "Task one",
+        title: "Task to do one",
         color: "blue.600",
       },
     ],
@@ -16,7 +16,7 @@ const useTaskCollection = () => {
       {
         id: uuidv4(),
         column: columnType.IN_PROGRESS,
-        title: "Task one",
+        title: "Task in progress one",
         color: "yellow.600",
       },
     ],
@@ -24,7 +24,7 @@ const useTaskCollection = () => {
       {
         id: uuidv4(),
         column: columnType.BLOCKED,
-        title: "Task one",
+        title: "Task blocked one",
         color: "red.600",
       },
     ],
@@ -32,7 +32,7 @@ const useTaskCollection = () => {
       {
         id: uuidv4(),
         column: columnType.COMPLETED,
-        title: "Task one",
+        title: "Task completed one",
         color: "green.600",
       },
     ],

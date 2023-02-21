@@ -7,6 +7,7 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import useColumnDrop from "../hooks/useColumnDrop";
 import useColumnTask from "../hooks/useColumnTask";
 import { columnType, taskType } from "../utils/types";
 import Task from "./Task";
@@ -18,29 +19,11 @@ const columnColorScheme: Record<columnType, string> = {
   completed: "green",
 };
 
-const mockTasks: taskType[] = [
-  {
-    id: "1",
-    title: "mock Title",
-    column: columnType.TO_DO,
-    color: "red.600",
-  },
-  {
-    id: "1",
-    title: "mock Title",
-    column: columnType.COMPLETED,
-    color: "green.600",
-  },
-  {
-    id: "1",
-    title: "mock Title",
-    column: columnType.TO_DO,
-    color: "blue.600",
-  },
-];
-
 const Column = ({ column }: { column: columnType }) => {
-  const {tasks, addEmptyTask} = useColumnTask(column);
+  const { tasks, addEmptyTask, handleTaskDrop } = useColumnTask(column);
+
+  const { isOver, dropRef } = useColumnDrop(column, handleTaskDrop);
+
   return (
     <Box>
       <Heading>
@@ -48,17 +31,27 @@ const Column = ({ column }: { column: columnType }) => {
           {column}
         </Badge>
       </Heading>
-      <IconButton w={"full"} aria-label="add" icon={<AddIcon />} onClick={addEmptyTask} />
+      <IconButton
+        w={"full"}
+        aria-label="add"
+        icon={<AddIcon />}
+        onClick={addEmptyTask}
+      />
       <Stack
+        ref={dropRef}
         boxShadow={"md"}
         mt="2"
         bgColor={useColorModeValue("gray.50", "gray.900")}
         spacing="4"
         p="4"
+        minH={"400px"}
+        opacity={isOver ? 0.5 : 1}
       >
         {tasks.map((task, i) => {
           return (
             <Task
+            key={task.id}
+              index={i}
               id={task.id}
               title={task.title}
               column={task.column}
